@@ -1,0 +1,122 @@
+{
+  "base_url": "http://127.0.0.1:8000",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "endpoints": {
+    "media_get_all": {
+      "method": "GET",
+      "url": "http://127.0.0.1:8000/api/media",
+      "expected_status": 200
+    },
+    "media_search_title": {
+      "method": "GET",
+      "url": "http://127.0.0.1:8000/api/media?title=Jujutsu",
+      "expected_status": 200
+    },
+    "media_show_detail": {
+      "method": "GET",
+      "url": "http://127.0.0.1:8000/api/media/1",
+      "expected_status": 200
+    },
+    "media_show_not_found": {
+      "method": "GET",
+      "url": "http://127.0.0.1:8000/api/media/9999",
+      "expected_status": 404
+    },
+    "media_create_happy": {
+      "method": "POST",
+      "url": "http://127.0.0.1:8000/api/media",
+      "expected_status": 201,
+      "body": {
+        "title": "Solo Leveling",
+        "category": "Anime",
+        "genre": "Action, Fantasy",
+        "description": "Adaptasi anime dari web novel populer.",
+        "episodes": 12,
+        "format": "Streaming"
+      }
+    },
+    "media_create_empty_title": {
+      "method": "POST",
+      "url": "http://127.0.0.1:8000/api/media",
+      "expected_status": 422,
+      "body": {
+        "title": "",
+        "category": "Anime"
+      }
+    },
+    "media_create_duplicate_title": {
+      "method": "POST",
+      "url": "http://127.0.0.1:8000/api/media",
+      "expected_status": 422,
+      "body": {
+        "title": "Jujutsu Kaisen",
+        "category": "Anime"
+      }
+    },
+    "media_update_happy": {
+      "method": "PATCH",
+      "url": "http://127.0.0.1:8000/api/media/1",
+      "expected_status": 200,
+      "body": {
+        "genre": "Action, Dark Fantasy",
+        "episodes": 47
+      }
+    },
+    "media_delete_happy": {
+      "method": "DELETE",
+      "url": "http://127.0.0.1:8000/api/media/5",
+      "expected_status": 200
+    },
+    "user_show_with_collection": {
+      "method": "GET",
+      "url": "http://127.0.0.1:8000/api/users/1",
+      "expected_status": 200
+    },
+    "user_create_happy": {
+      "method": "POST",
+      "url": "http://127.0.0.1:8000/api/users",
+      "expected_status": 201,
+      "body": {
+        "name": "Budi Santoso",
+        "email": "budi@flipplay.test"
+      }
+    },
+    "user_collection_list": {
+      "method": "GET",
+      "url": "http://127.0.0.1:8000/api/users/1/collection",
+      "expected_status": 200
+    },
+    "user_collection_attach_happy": {
+      "method": "POST",
+      "url": "http://127.0.0.1:8000/api/users/1/collection",
+      "expected_status": 201,
+      "body": {
+        "media_id": 2
+      }
+    },
+    "user_collection_attach_duplicate": {
+      "method": "POST",
+      "url": "http://127.0.0.1:8000/api/users/1/collection",
+      "expected_status": 409,
+      "body": {
+        "media_id": 1
+      }
+    },
+    "user_collection_attach_missing_media": {
+      "method": "POST",
+      "url": "http://127.0.0.1:8000/api/users/1/collection",
+      "expected_status": 422,
+      "body": {
+        "media_id": 9999
+      }
+    },
+    "user_collection_detach_happy": {
+      "method": "DELETE",
+      "url": "http://127.0.0.1:8000/api/users/1/collection/2",
+      "expected_status": 200
+    }
+  }
+}
