@@ -1,0 +1,469 @@
+{
+  "info": {
+    "_postman_id": "a7d1e4b2-5c34-4f91-9e12-flipplay0004",
+    "name": "FlipPlay REST API - Demo Modul 4",
+    "description": "Koleksi pengujian Postman untuk Demo Modul 4 (Laravel 12 REST API - FlipPlay), mencakup Happy Path dan Failure Path.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    }
+  ],
+  "item": [
+    {
+      "name": "Media CRUD",
+      "item": [
+        {
+          "name": "[Happy] GET All Media",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/media",
+              "host": ["{{base_url}}"],
+              "path": ["api", "media"]
+            }
+          }
+        },
+        {
+          "name": "[Happy] GET Search Media by Title",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/media?title=Jujutsu",
+              "host": ["{{base_url}}"],
+              "path": ["api", "media"],
+              "query": [
+                { "key": "title", "value": "Jujutsu" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "[Happy] GET Media Detail (with Users)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/media/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "media", "1"]
+            }
+          }
+        },
+        {
+          "name": "[Failure] GET Media Not Found (404)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 404', function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/media/9999",
+              "host": ["{{base_url}}"],
+              "path": ["api", "media", "9999"]
+            }
+          }
+        },
+        {
+          "name": "[Happy] POST Create Media (201)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Solo Leveling\",\n  \"category\": \"Anime\",\n  \"genre\": \"Action, Fantasy\",\n  \"description\": \"Adaptasi anime dari web novel populer.\",\n  \"episodes\": 12,\n  \"format\": \"Streaming\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/media",
+              "host": ["{{base_url}}"],
+              "path": ["api", "media"]
+            }
+          }
+        },
+        {
+          "name": "[Failure] POST Create Media - Empty Title (422)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 422', function () {",
+                  "    pm.response.to.have.status(422);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"\",\n  \"category\": \"Anime\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/media",
+              "host": ["{{base_url}}"],
+              "path": ["api", "media"]
+            }
+          }
+        },
+        {
+          "name": "[Failure] POST Create Media - Duplicate Title (422)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 422', function () {",
+                  "    pm.response.to.have.status(422);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Jujutsu Kaisen\",\n  \"category\": \"Anime\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/media",
+              "host": ["{{base_url}}"],
+              "path": ["api", "media"]
+            }
+          }
+        },
+        {
+          "name": "[Happy] PATCH Update Media (200)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"genre\": \"Action, Dark Fantasy\",\n  \"episodes\": 47\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/media/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "media", "1"]
+            }
+          }
+        },
+        {
+          "name": "[Happy] DELETE Media (200)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/media/5",
+              "host": ["{{base_url}}"],
+              "path": ["api", "media", "5"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users & Collection (Custom Actions)",
+      "item": [
+        {
+          "name": "[Happy] GET User Detail with Collection",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/users/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "1"]
+            }
+          }
+        },
+        {
+          "name": "[Happy] GET User Collection",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/users/1/collection",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "1", "collection"]
+            }
+          }
+        },
+        {
+          "name": "[Happy] POST Add Media to User Collection (201)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"media_id\": 2\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/users/1/collection",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "1", "collection"]
+            }
+          }
+        },
+        {
+          "name": "[Failure] POST Add Duplicate Media to Collection (409)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 409', function () {",
+                  "    pm.response.to.have.status(409);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"media_id\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/users/1/collection",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "1", "collection"]
+            }
+          }
+        },
+        {
+          "name": "[Failure] POST Add Non-Existent Media to Collection (422)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 422', function () {",
+                  "    pm.response.to.have.status(422);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"media_id\": 9999\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/users/1/collection",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "1", "collection"]
+            }
+          }
+        },
+        {
+          "name": "[Happy] DELETE Remove Media from Collection (200)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/users/1/collection/2",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "1", "collection", "2"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
